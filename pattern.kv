@@ -1,0 +1,349 @@
+
+<lobsterWindow>:
+    diameter: DT
+    centre: CT
+    divisions: DV
+    sheet: ST
+    bend_angle: BA
+    halves: HS
+    FloatLayout:
+        size: root.width, root.height/2
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":.95}
+            text: "Diameter: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":.95}
+            size_hint: 0.4, 0.05
+            id: DT
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.85}
+            text: "Centre: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.85}
+            size_hint: 0.4, 0.05
+            id: CT
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.75}
+            text: "Divisions: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.75}
+            size_hint: 0.4, 0.05
+            id: DV
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.65}
+            text: "Sheet: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.65}
+            size_hint: 0.4, 0.05
+            id: ST
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.55}
+            text: "Bend Angle: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.55}
+            size_hint: 0.4, 0.05
+            id: BA
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.45}
+            text: "Halves: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.45}
+            size_hint: 0.4, 0.05
+            id: HS
+            multiline: False
+
+        Button:
+            pos_hint: {"x":0.2, "y":0.25}
+            size_hint: 0.6, 0.065
+            text: "Calculate"
+            background_color: (0.157, 0.455, 0.753, 1.0)
+            background_normal: ''
+            on_press:
+                id = root.calculate_button()
+
+        Button:
+            pos_hint: {"x":0.2, "y":0.18}
+            size_hint: 0.6, 0.065
+            text: "Clear"
+            background_color: (0.3, 0.7, 0, 1)
+            background_normal: ''
+            on_press:
+                root.reset()
+
+        Button:
+            pos_hint: {"x":0.2, "y":0.11}
+            size_hint: 0.6, 0.065
+            text: "Back"
+            background_color: (1, 0.5, 0, 1)
+            background_normal: ''
+            on_press:
+                root.manager.transition.direction = "left"
+                app.root.current = "menu"
+
+<FirstWindow>:
+    FloatLayout:
+        Label:
+            text: "Branch and Bend Patterns"
+            color: (.35, .35, .35, 1)
+            pos_hint: {"x":0.2, "top":1}
+            size_hint: 0.6, 0.2
+            bold:True
+
+        Button:
+            size_hint: None, None
+            width: 250
+            height: 250
+            pos_hint: {"x":.32, "top":.85}
+            border: (0, 0, 0, 0)
+            background_normal: 'branch.png'
+            on_press:
+                root.manager.transition.direction = "right"
+                root.angleBtn()
+
+        Button:
+            size_hint: None, None
+            width: 250
+            height: 250
+            pos_hint: {"x":.32, "top":.65}
+            border: (0, 0, 0, 0)
+            background_normal: 'bend.png'
+            on_press:
+                root.manager.transition.direction = "right"
+                root.lobsterBtn()
+
+        Button:
+            size_hint: None, None
+            width: 250
+            height: 250
+            pos_hint: {"x":.32, "top":.45}
+            border: (0, 0, 0, 0)
+            background_normal: 'angle.png'
+            on_press:
+                root.manager.transition.direction = "right"
+                root.angleBtn()
+
+        Button:
+            size_hint: None, None
+            size: 250, 80
+            pos_hint: {"x":.32, "top":.15}
+            text: "Hints"
+            background_color: (0.3, 0.7, 0, 1)
+            background_normal: ''
+            on_press:
+                root.manager.transition.direction = "up"
+                root.hintsBtn()
+
+<MainWindow>:
+    FloatLayout:
+        Label:
+            pos_hint: {"x": 0.1, "top":1}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Divisions are 12, 24 or 48"
+            color: (.35, .35, .35, 1)
+
+        Label:
+            pos_hint: {"x": 0.1, "top":0.9}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Std bend is 3 full and 2 half segments"
+            color: (.35, .35, .35, 1)
+
+        Label:
+            pos_hint: {"x": 0.1, "top":0.8}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Which would be equivalent to 8 halves"
+            color: (.35, .35, .35, 1)
+
+        Label:
+            pos_hint: {"x": 0.1, "top":0.7}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Std centre-line is equal to the diameter"
+            color: (.35, .35, .35, 1)
+
+        Label:
+            pos_hint: {"x": 0.1, "top":0.6}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Maximum sheet thickness is 6mm"
+            color: (.35, .35, .35, 1)
+
+        Label:
+            pos_hint: {"x": 0.1, "top":0.5}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Branch Length is the shortest length"
+            color: (.35, .35, .35, 1)
+
+        Label:
+            pos_hint: {"x": 0.1, "top":0.4}
+            size_hint: 0.8, 0.2
+            font_size: 37
+            text: "Tea up! www.up-rivington.com"
+            color: (.35, .35, .35, 1)
+
+        Button:
+            pos_hint: {"x":0.2, "y": 0.1}
+            size_hint: 0.6, 0.065
+            text: "Back"
+            background_color: (1, 0.5, 0, 1)
+            background_normal: ''
+            on_press:
+                app.root.current = "menu"
+                root.manager.transition.direction = "down"
+
+
+<AngleBranch>:
+    mainDiameter: MD
+    branch_diameter: BD
+    branch_length: SL
+    branch_angle: BA
+    divisions: DV
+    sheet: ST
+
+    FloatLayout:
+        size: root.width, root.height/2
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.95}
+            text: "Main diameter: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.95}
+            size_hint: 0.4, 0.05
+            id: MD
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.85}
+            text: "Branch diameter: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.85}
+            size_hint: 0.4, 0.05
+            id: BD
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.75}
+            text: "branch_length: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.75}
+            size_hint: 0.4, 0.05
+            id: SL
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.65}
+            text: "branch_angle: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.65}
+            size_hint: 0.4, 0.05
+            id: BA
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.55}
+            text: "Divisions: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.55}
+            size_hint: 0.4, 0.05
+            id: DV
+            multiline: False
+
+        Label:
+            size_hint: 0.5, 0.06
+            pos_hint: {"x":0, "top":0.45}
+            text: "Sheet: "
+            bold: True
+            color: (.35, .35, .35, 1)
+
+        TextInput:
+            pos_hint: {"x":0.5, "top":0.45}
+            size_hint: 0.4, 0.05
+            id: ST
+            multiline: False
+
+    Button:
+        pos_hint: {"x":0.2, "y":0.25}
+        size_hint: 0.6, 0.065
+        text: "Calculate"
+        background_color: (0.157, 0.455, 0.753, 1.0)
+        background_normal: ''
+        on_press:
+            id = root.calculate_button()
+
+    Button:
+        pos_hint: {"x":0.2, "y":0.18}
+        size_hint: 0.6, 0.065
+        text: "Clear"
+        background_color: (0.3, 0.7, 0, 1)
+        background_normal: ''
+        on_press: root.reset()
+
+    Button:
+        pos_hint: {"x":0.2, "y":0.11}
+        size_hint: 0.6, 0.065
+        text: "Back"
+        background_color: (1, 0.5, 0, 1)
+        background_normal: ''
+        on_press:
+            root.manager.transition.direction = "left"
+            app.root.current = "menu"
+
+
